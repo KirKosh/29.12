@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div>
+            <div>
+            <button id = "1" type="checkbox">количество слов</button>
+            <button id = "2" type="checkbox">Количество символов</button>
+            <button id = "3" type="checkbox">Количество без пробелов</button>
+            <button id = "4" type="checkbox">% символов</button>
+            </div>
+            <textarea class = "textarea"></textarea>
+        </div>
+        <div>
+            <p id="wordCount"></p>
+            <p id="symbolCount"></p>
+            <p id="letterCount"></p>
+            <p id="percent"></p> 
+        </div>
+    </div>
+    <script>
+        const textArea = document.querySelector('.textarea');
+        const textAreaH = textArea.offsetHeight;
+        let str;
+        let wordCount = document.getElementById('wordCount');
+        let symbolCount = document.getElementById('symbolCount');
+        let letterCount = document.getElementById('letterCount');
+        let percent = document.getElementById('percent');
+        let check = document.querySelectorAll('button[type="checkbox"]');
+        check.forEach(item => {
+            item.addEventListener('click', (e) => {
+                str = textArea.value.trim();
+                let itemId = e.target.id;
+                switch (itemId) {
+                    case '1':
+                        item.checked ? showCountWords() : wordCount.innerHTML = "";
+                        break;
+                    case '2':
+                        item.checked ? showCountSymbols() : symbolCount.textContent = "";
+                        break;
+                    case '3':
+                        item.checked ? showCountSymbWithoutSpace() : letterCount.textContent = "";
+                        break;
+                    case '4':
+                        item.checked ? showSymbolPercent() : percent.innerHTML ="";
+                        break;
+                } 
+            })
+        })
+        function showCountWords() {
+            wordCount.innerHTML = `${str.split(' ').length} Слов в тексте` ;}
+        function showCountSymbols() {
+            symbolCount.textContent = `${str.length} Слов в тексте` ;}
+        function showCountSymbWithoutSpace() {
+            let strWithoutSpace = str.replace(/\s/g, '');
+            letterCount.textContent = `${strWithoutSpace.length} Слов исключая пробелы`;}
+        function showSymbolPercent(){
+            let onePercent = Math.floor(100 / str.length);
+            let object = [...str].reduce(
+                (total, amount) => ({...total,[amount]: !total[amount] ? onePercent : total[amount] + onePercent}),{}
+            );
+            percent.innerHTML = `<table class="table"><td>Процентное содержание (%)</td><table>`;
+            
+            for (key in object){
+                let row = document.createElement('tr');
+                row.innerHTML = `<td>${key}</td><td>${object[key]}</td>`;
+                document.querySelector('.table').appendChild(row);
+            }
+        }
+    </script>    
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id = "a" type="sum">
+    <input id = "b" type="sum">
+    <button id="otvet">Ответ</button>
+    <div id = "body"></div>
+    <script>
+        document.querySelector('#otvet').onclick = function() {
+            let D = 0,
+                body = document.querySelector("body"),
+                a = document.querySelector('#a').value;
+                b = document.querySelector('#b').value;
+                for(let i = 0; i >= a; i--){
+                    if(a%i == 0 && b%i == 0){
+                    D=i;
+                    }
+                }
+            alert(D);
+            
+        }  
+        
+    </script>    
+</body>
+</html>
